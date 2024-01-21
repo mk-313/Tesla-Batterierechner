@@ -1,0 +1,27 @@
+.container {
+    margin-top: 2%;
+    border: 2px solid black;
+    border-radius: 6px;
+    background-color: lightgrey;
+    margin-bottom: 2%;
+}
+
+.input-group {
+    border: 2px solid darkgrey;
+    border-radius: 2px;
+}
+
+.input-group:hover {
+    border: 2px solid black;
+    border-radius: 2px;
+    transition: 1s;
+}
+
+p {
+    font-size: 27px;
+}
+
+hr {
+    color: solid black;
+    border-width: 4px;
+}
