@@ -43,6 +43,24 @@ form {
     animation-duration: 1.5s;
 }
 
+.progress {
+    background-color: #e9ecef; /* Hintergrund des leeren Balkens */
+    border: 1px solid darkgrey;
+    margin: 0 auto; /* Zentriert den Balken im Formular */
+}
+
+#ladebalken {
+    font-weight: bold;
+    font-size: 16px;
+    /* Macht die Breitenänderung UND den Farbwechsel schön geschmeidig: */
+    transition: width 0.4s ease-in-out, background-color 0.4s ease; 
+}
+
+.alert {
+    max-width: 600px;
+    margin: 15px auto; /* Zentriert die Box und gibt etwas Abstand */
+}
+
 @keyframes reinfliegen {
     from {
         margin-top: 50px;
