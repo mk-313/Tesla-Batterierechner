@@ -30,11 +30,11 @@
                         aria-describedby="inputGroup-sizing-default">
                 </div>
                 <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-default">Verbrauch in Watt pro km:</span>
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Verbrauch in Watt pro km (100 - 250):</span>
                     </div>
-                    <input id="verbrauch" type="number" class="form-control" aria-label="Sizing example input"
-                        aria-describedby="inputGroup-sizing-default">
+                    <!-- min, max und den Standardwert (value) hinzugefügt -->
+                    <input id="verbrauch" type="number" min="100" max="250" value="150" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                 </div>
 
                 <h4>Batterie</h4>

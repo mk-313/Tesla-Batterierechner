@@ -4,9 +4,13 @@ $("#berechnen").click(function () {
     let batteriestandC = $("#batteriestand").val();
 
     if (streckeA == "" || verbrauchB == "" || batteriestandC == "") {
-        // Altes Ausblenden, Text ändern, elegant nach unten gleiten lassen
         $("#fehler-fahrt").stop(true, true).hide().text("Bitte alle Felder ausfüllen!").slideDown(400);
-    } else {
+    } 
+    
+    else if (verbrauchB < 100 || verbrauchB > 250) {
+        $("#fehler-fahrt").stop(true, true).hide().text("Der Verbrauch muss zwischen 100 und 250 W/km liegen!").slideDown(400);
+    } 
+    else {
         let D = (streckeA * verbrauchB) / 1000 * (520 / 79);
         let E = batteriestandC - D;
         let F = (batteriestandC * 100) / 520;
@@ -16,7 +20,6 @@ $("#berechnen").click(function () {
         if (E < 0 || H < 0) {
             $("#fehler-fahrt").stop(true, true).hide().text("Die Fahrt geht sich mit den angegebenen Werten nicht aus!").slideDown(400);
         } else {
-            // Bei erfolgreicher Berechnung den Fehler nach oben weggleiten lassen
             $("#fehler-fahrt").slideUp(200);
             
             $("#D").text(`Verbrauchte km: ${Math.round(D)}`);
@@ -28,16 +31,16 @@ $("#berechnen").click(function () {
     }
 });
 
+// Beim Zurücksetzen den Standardwert wiederherstellen
 $("#zuruecksetzen").click(function () {
     $("#strecke").val("");
-    $("#verbrauch").val("");
+    $("#verbrauch").val("150"); // Setzt es wieder auf den Standardwert
     $("#batteriestand").val("");
     $("#D").text("");
     $("#E").text("");
     $("#F").text("");
     $("#G").text("");
     $("#H").text("");
-    // Fehler sanft nach oben weggleiten lassen
     $("#fehler-fahrt").slideUp(200);
 });
 
