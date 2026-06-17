@@ -17,13 +17,13 @@ body {
     opacity: 0.95;
 }
 
-.input-group {
+.input-group, .custom-select {
     border: 2px solid darkgrey;
     border-radius: 2px;
     max-width: 600px;
 }
 
-.input-group:hover {
+.input-group:hover, .custom-select:hover {
     border: 2px solid black;
     border-radius: 2px;
     transition: 1s;

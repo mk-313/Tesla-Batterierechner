@@ -2,16 +2,25 @@ $("#berechnen").click(function () {
     let streckeA = $("#strecke").val();
     let verbrauchB = $("#verbrauch").val();
     let batteriestandC = $("#batteriestand").val();
+    let wetterModus = $("#wetter").val(); // NEU: Wetter holen
 
     if (streckeA == "" || verbrauchB == "" || batteriestandC == "") {
         $("#fehler-fahrt").stop(true, true).hide().text("Bitte alle Felder ausfüllen!").slideDown(400);
     } 
-    
     else if (verbrauchB < 100 || verbrauchB > 250) {
         $("#fehler-fahrt").stop(true, true).hide().text("Der Verbrauch muss zwischen 100 und 250 W/km liegen!").slideDown(400);
     } 
     else {
-        let D = (streckeA * verbrauchB) / 1000 * (520 / 79);
+        // NEU: Wetterfaktor bestimmen
+        let wetterFaktor = 1.0;
+        if (wetterModus === "normal") {
+            wetterFaktor = 1.10; // +10% Verbrauch
+        } else if (wetterModus === "winter") {
+            wetterFaktor = 1.25; // +25% Verbrauch im Winter
+        }
+
+        // NEU: wetterFaktor in die Berechnung einbeziehen
+        let D = (streckeA * verbrauchB * wetterFaktor) / 1000 * (520 / 79);
         let E = batteriestandC - D;
         let F = (batteriestandC * 100) / 520;
         let G = D * 100 / 520;
@@ -34,8 +43,9 @@ $("#berechnen").click(function () {
 // Beim Zurücksetzen den Standardwert wiederherstellen
 $("#zuruecksetzen").click(function () {
     $("#strecke").val("");
-    $("#verbrauch").val("150"); // Setzt es wieder auf den Standardwert
+    $("#verbrauch").val("150"); 
     $("#batteriestand").val("");
+    $("#wetter").val("sommer"); // NEU: Setzt das Dropdown zurück
     $("#D").text("");
     $("#E").text("");
     $("#F").text("");
@@ -64,7 +74,6 @@ $("#ladedauer_berechnen").click(function () {
             $("#fehler-laden").stop(true, true).hide().text("Falsche Eingabe! Man kann höchstens auf 100% laden.").slideDown(400);
         }
         else {
-            // Bei erfolgreicher Berechnung Fehler ausblenden
             $("#fehler-laden").slideUp(200);
 
             let dezimalzahl = (ladenB - batteriestandA) / 3.077;
@@ -81,38 +90,28 @@ $("#laden_zuruecksetzen").click(function () {
     $("#batteriestandPro").val("");
     $("#laden").val("");
     $("#ladedauer").text("");
-    // Fehler ausblenden und Ladebalken zurücksetzen
     $("#fehler-laden").slideUp(200);
     $("#ladebalken").css("width", "0%").text("0%").attr("aria-valuenow", 0);
     $("#ladebalken").removeClass("bg-warning bg-danger").addClass("bg-success");
 });
 
-// Dynamische Aktualisierung des Balkens beim Tippen
 $("#laden").on("input", function() {
     let wert = $(this).val();
 
-    // Begrenzung zwischen 0 und 100
     if (wert > 100) wert = 100;
     if (wert < 0 || wert == "") wert = 0;
 
-    // 1. Balkenbreite und Text aktualisieren
     $("#ladebalken").css("width", wert + "%");
     $("#ladebalken").text(wert + "%");
     $("#ladebalken").attr("aria-valuenow", wert);
     
-    // 2. DYNAMISCHER FARBWECHSEL
-    // Zuerst alle möglichen Farbklassen entfernen, damit sie sich nicht blockieren
     $("#ladebalken").removeClass("bg-danger bg-warning bg-success");
 
-    // Jetzt je nach Wert die passende Farbe hinzufügen
     if (wert < 20) {
-        // Niedriger Stand: Rot
         $("#ladebalken").addClass("bg-danger");
     } else if (wert < 80) {
-        // Mittlerer Stand: Gelb/Orange
         $("#ladebalken").addClass("bg-warning");
     } else {
-        // Hoher Stand: Grün
         $("#ladebalken").addClass("bg-success");
     }
 });
