@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
     <meta charset="UTF-8">
@@ -13,90 +13,109 @@
 </head>
 
 <body>
-    <div class="container">
-        <center>
-            <form action="">
-                <h1>TESLA MODEL Y Batterierechner</h1>
-                <div id="fehler-fahrt" class="alert alert-danger" role="alert" style="display: none;">
-                </div>
-                <h4>Fahrt</h4>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-default">zu fahrende Strecke in km:</span>
-                    </div>
-                    <input id="strecke" type="number" class="form-control" aria-label="Sizing example input"
-                        aria-describedby="inputGroup-sizing-default">
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-default">Verbrauch W/km (100-250):</span>
-                    </div>
-                    <input id="verbrauch" type="number" min="100" max="250" value="150" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                </div>
-
-                <h4>Batterie</h4>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-default">Batteriestand zu Beginn (km):</span>
-                    </div>
-                    <input id="batteriestand" type="number" class="form-control" aria-label="Sizing example input"
-                        aria-describedby="inputGroup-sizing-default">
-                </div>
-
-                <h4>Bedingungen</h4>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <label class="input-group-text" for="wetter">Jahreszeit / Temperatur:</label>
-                    </div>
-                    <select class="custom-select" id="wetter">
-                        <option value="sommer" selected>Sommer / Optimal (~20°C)</option>
-                        <option value="normal">Frühling/Herbst (~10°C)</option>
-                        <option value="winter">Winter / Kalt (~ -5°C)</option>
-                    </select>
-                </div>
-
-                <button id="berechnen" type="button" class="btn btn-outline-secondary">berechnen</button>
-                <button id="zuruecksetzen" type="button" class="btn btn-secondary">&#8634;Zurücksetzen</button><br><br>
-                <p><span id="F" class="badge badge-secondary"></span></p>
-                <p><span id="D" class="badge badge-secondary"></span> <span id="G" class="badge badge-secondary"></span>
-                </p>
-                <br>
-                <p><span id="E" class="badge badge-secondary"></span> <span id="H" class="badge badge-secondary"></span>
-                </p>
-            </form>
-
-            <hr>
-            <h1>Ladeinfo</h1>
-            <div id="fehler-laden" class="alert alert-danger" role="alert" style="display: none;">
-            </div>
-            <div class="input-group mb-3">
+    <!-- d-flex und flex-column zentrieren den Inhalt sauber ohne <center> -->
+    <div class="container my-4 p-4 d-flex flex-column align-items-center">
+        
+        <form action="" class="w-100 text-center">
+            <h1 class="h3 mb-4">TESLA MODEL Y Batterierechner</h1>
+            
+            <div id="fehler-fahrt" class="alert alert-danger" role="alert" style="display: none;"></div>
+            
+            <h4 class="mt-3">Fahrt</h4>
+            
+            <!-- responsive-input-group bricht auf Mobilgeräten um -->
+            <div class="input-group responsive-input-group mb-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Batteriestand in %</span>
+                    <span class="input-group-text">zu fahrende Strecke in km:</span>
                 </div>
-                <input id="batteriestandPro" type="number" class="form-control" aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-default">
+                <input id="strecke" type="number" class="form-control">
             </div>
-            <div class="input-group mb-3">
+            
+            <div class="input-group responsive-input-group mb-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Aufladen auf %</span>
+                    <span class="input-group-text">Verbrauch W/km (100-250):</span>
                 </div>
-                <input id="laden" type="number" class="form-control" aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-default">
+                <input id="verbrauch" type="number" min="100" max="250" value="150" class="form-control">
             </div>
-            <div class="progress mb-3" style="max-width: 600px; height: 30px;">
+
+            <h4>Batterie</h4>
+            <div class="input-group responsive-input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Batteriestand zu Beginn (km):</span>
+                </div>
+                <input id="batteriestand" type="number" class="form-control">
+            </div>
+
+            <h4>Bedingungen</h4>
+            <div class="input-group responsive-input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="wetter">Jahreszeit / Temperatur:</label>
+                </div>
+                <select class="custom-select" id="wetter">
+                    <option value="sommer" selected>Sommer / Optimal (~20°C)</option>
+                    <option value="normal">Frühling/Herbst (~10°C)</option>
+                    <option value="winter">Winter / Kalt (~ -5°C)</option>
+                </select>
+            </div>
+
+            <!-- d-block auf Mobile sorgt dafür, dass Buttons untereinander stehen, wenn es eng wird -->
+            <div class="mt-4">
+                <button id="berechnen" type="button" class="btn btn-outline-secondary m-1">berechnen</button>
+                <button id="zuruecksetzen" type="button" class="btn btn-secondary m-1">&#8634; Zurücksetzen</button>
+            </div>
+
+            <!-- d-flex sorgt dafür, dass sich die Badges bei Platzmangel sauber untereinander anordnen -->
+            <div class="badge-output mt-4 d-flex flex-wrap justify-content-center gap-2">
+                <p><span id="F" class="badge badge-secondary m-1"></span></p>
+                <p>
+                    <span id="D" class="badge badge-secondary m-1"></span> 
+                    <span id="G" class="badge badge-secondary m-1"></span>
+                </p>
+                <p>
+                    <span id="E" class="badge badge-secondary m-1"></span> 
+                    <span id="H" class="badge badge-secondary m-1"></span>
+                </p>
+            </div>
+        </form>
+
+        <hr class="w-100 my-4">
+        
+        <div class="w-100 text-center">
+            <h1 class="h3 mb-4">Ladeinfo</h1>
+            <div id="fehler-laden" class="alert alert-danger" role="alert" style="display: none;"></div>
+            
+            <div class="input-group responsive-input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Batteriestand in %</span>
+                </div>
+                <input id="batteriestandPro" type="number" class="form-control">
+            </div>
+            
+            <div class="input-group responsive-input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Aufladen auf %</span>
+                </div>
+                <input id="laden" type="number" class="form-control">
+            </div>
+            
+            <div class="progress mb-3 w-100" style="max-width: 600px; height: 30px;">
                 <div id="ladebalken" class="progress-bar bg-success" role="progressbar" 
                     style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
                     0%
                 </div>
             </div>
-            <button id="ladedauer_berechnen" type="button" class="btn btn-outline-secondary">berechnen</button>
-            <button id="laden_zuruecksetzen" type="button" class="btn btn-secondary">&#8634;Zurücksetzen</button>
-            <br>
-            <p><span id="ladedauer" class="badge badge-secondary"></span></p>
+            
+            <div class="mt-3">
+                <button id="ladedauer_berechnen" type="button" class="btn btn-outline-secondary m-1">berechnen</button>
+                <button id="laden_zuruecksetzen" type="button" class="btn btn-secondary m-1">&#8634; Zurücksetzen</button>
+            </div>
+            
+            <div class="badge-output mt-3">
+                <p><span id="ladedauer" class="badge badge-secondary"></span></p>
+            </div>
+        </div>
     </div>
 
-    </center>
     <script src="./app.js"></script>
 </body>
-
 </html>

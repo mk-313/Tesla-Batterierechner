@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    max-height: 100%;
+    min-height: 100vh; /* Verhindert Abschneiden des Hintergrunds */
     background-attachment: fixed;
     background-image: url("../src/Tesla.png");
     background-size: cover;
@@ -9,33 +9,43 @@ body {
 }
 
 .container {
-    margin-top: 2%;
+    max-width: 700px; /* Begrenzt die Breite auf großen Bildschirmen elegant */
+    width: 92%; /* Verhindert, dass der Kasten am Handyrand klebt */
     border: 2px solid white;
     border-radius: 6px;
-    background-color: lightgray;
-    margin-bottom: 2%;
-    opacity: 0.95;
+    background-color: rgba(211, 211, 211, 0.95); /* Sauberer gelöst als mit opacity */
+}
+
+/* Zentrierung und maximale Breite für alle Formularelemente */
+.input-group, .custom-select, form, .alert {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .input-group, .custom-select {
     border: 2px solid darkgrey;
     border-radius: 2px;
-    max-width: 600px;
 }
 
 .input-group:hover, .custom-select:hover {
     border: 2px solid black;
     border-radius: 2px;
-    transition: 1s;
+    transition: 0.4s; /* 1s war etwas träge beim Hovern */
 }
 
-p {
-    font-size: 27px;
+/* Dynamische Schriftgröße für die Ergebnisse */
+.badge-output p {
+    font-size: 1.4rem; 
+    white-space: normal; /* Erlaubt Textumbruch im Badge auf kleinen Displays */
+}
+
+.badge {
+    white-space: normal !important; /* Bootstrap-Überschreibung für Mobilgeräte */
 }
 
 hr {
-    color: solid black;
-    border-width: 4px;
+    border-top: 4px solid black;
 }
 
 form {
@@ -44,29 +54,51 @@ form {
 }
 
 .progress {
-    background-color: #e9ecef; /* Hintergrund des leeren Balkens */
+    background-color: #e9ecef; 
     border: 1px solid darkgrey;
-    margin: 0 auto; /* Zentriert den Balken im Formular */
+    margin: 0 auto; 
 }
 
 #ladebalken {
     font-weight: bold;
     font-size: 16px;
-    /* Macht die Breitenänderung UND den Farbwechsel schön geschmeidig: */
     transition: width 0.4s ease-in-out, background-color 0.4s ease; 
 }
 
-.alert {
-    max-width: 600px;
-    margin: 15px auto; /* Zentriert die Box und gibt etwas Abstand */
+@keyframes reinfliegen {
+    from { margin-top: 50px; }
+    to { margin-top: 0px; }
 }
 
-@keyframes reinfliegen {
-    from {
-        margin-top: 50px;
+/* ==========================================================================
+   MEDIA QUERIES FÜR MOBILGERÄTE (Smartphones)
+   ========================================================================== */
+@media (max-width: 576px) {
+    /* Macht die Input-Gruppen untereinander statt nebeneinander */
+    .responsive-input-group {
+        flex-direction: column;
+    }
+    
+    .responsive-input-group .input-group-prepend,
+    .responsive-input-group .input-group-prepend .input-group-text,
+    .responsive-input-group .form-control,
+    .responsive-input-group .custom-select {
+        width: 100% !important;
+        display: block;
+        border-radius: 4px !important;
+    }
+    
+    .responsive-input-group .input-group-prepend {
+        margin-bottom: 5px; /* Kleiner Abstand zwischen Label und Eingabefeld */
     }
 
-    to {
-        margin-top: 0px;
+    /* Kleinere Überschriften auf Smartphones */
+    h1.h3 {
+        font-size: 1.5rem;
+    }
+    
+    /* Text in den Badges auf Handys verkleinern */
+    .badge-output p {
+        font-size: 1.1rem;
     }
 }
