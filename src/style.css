@@ -34,14 +34,21 @@ body {
     transition: 0.4s; /* 1s war etwas träge beim Hovern */
 }
 
-/* Dynamische Schriftgröße für die Ergebnisse */
-.badge-output p {
-    font-size: 1.4rem; 
-    white-space: normal; /* Erlaubt Textumbruch im Badge auf kleinen Displays */
+.badge-output p, #ladedauer {
+    display: none; /* Standardmäßig verstecken, damit jQuery es einblenden kann */
 }
 
 .badge {
-    white-space: normal !important; /* Bootstrap-Überschreibung für Mobilgeräte */
+    white-space: normal !important;
+    display: inline-block;
+    /* Macht die Größenänderung beim Einblenden geschmeidig */
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Schicker, dezenter Schatten */
+}
+
+.badge:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 hr {

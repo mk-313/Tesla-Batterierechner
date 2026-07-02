@@ -2,7 +2,7 @@ $("#berechnen").click(function () {
     let streckeA = $("#strecke").val();
     let verbrauchB = $("#verbrauch").val();
     let batteriestandC = $("#batteriestand").val();
-    let wetterModus = $("#wetter").val(); // NEU: Wetter holen
+    let wetterModus = $("#wetter").val();
 
     if (streckeA == "" || verbrauchB == "" || batteriestandC == "") {
         $("#fehler-fahrt").stop(true, true).hide().text("Bitte alle Felder ausfüllen!").slideDown(400);
@@ -11,15 +11,13 @@ $("#berechnen").click(function () {
         $("#fehler-fahrt").stop(true, true).hide().text("Der Verbrauch muss zwischen 100 und 250 W/km liegen!").slideDown(400);
     } 
     else {
-        // NEU: Wetterfaktor bestimmen
         let wetterFaktor = 1.0;
         if (wetterModus === "normal") {
-            wetterFaktor = 1.10; // +10% Verbrauch
+            wetterFaktor = 1.10;
         } else if (wetterModus === "winter") {
-            wetterFaktor = 1.25; // +25% Verbrauch im Winter
+            wetterFaktor = 1.25;
         }
 
-        // NEU: wetterFaktor in die Berechnung einbeziehen
         let D = (streckeA * verbrauchB * wetterFaktor) / 1000 * (520 / 79);
         let E = batteriestandC - D;
         let F = (batteriestandC * 100) / 520;
@@ -31,26 +29,29 @@ $("#berechnen").click(function () {
         } else {
             $("#fehler-fahrt").slideUp(200);
             
+            // Erst Text setzen, dann verstecken und weich einblenden
             $("#D").text(`Verbrauchte km: ${Math.round(D)}`);
             $("#E").text(`Verbleibende km: ${Math.round(E)}`);
             $("#F").text("Batteriestand zu Fahrtbeginn: " + Math.round(F) + "%");
             $("#G").text(" Das sind " + Math.round(G) + "%");
             $("#H").text(" Das sind: " + Math.round(H) + "%");
+
+            // Animation: Die Ergebnisse fliegen sanft via Fade-In ein
+            $(".badge-output p").stop(true, true).hide().fadeIn(600);
         }
     }
 });
 
-// Beim Zurücksetzen den Standardwert wiederherstellen
 $("#zuruecksetzen").click(function () {
     $("#strecke").val("");
     $("#verbrauch").val("150"); 
     $("#batteriestand").val("");
-    $("#wetter").val("sommer"); // NEU: Setzt das Dropdown zurück
-    $("#D").text("");
-    $("#E").text("");
-    $("#F").text("");
-    $("#G").text("");
-    $("#H").text("");
+    $("#wetter").val("sommer");
+    
+    // Beim Zurücksetzen blenden wir die Badges elegant aus
+    $(".badge-output p").slideUp(300, function() {
+        $("#D, #E, #F, #G, #H").text("");
+    });
     $("#fehler-fahrt").slideUp(200);
 });
 
@@ -81,7 +82,9 @@ $("#ladedauer_berechnen").click(function () {
             let dezimaleMinuten = (dezimalzahl - stunden) * 60;
             let minuten = Math.round(dezimaleMinuten);
 
-            $("#ladedauer").text(`Ladedauer:  ${stunden} Stunden und ${minuten} Minuten`);
+            // Text setzen und mit Slide-Down Effekt präsentieren
+            $("#ladedauer").text(`Ladedauer: ${stunden} Stunden und ${minuten} Minuten`);
+            $("#ladedauer").parent().stop(true, true).hide().slideDown(500);
         }
     }
 });
@@ -89,8 +92,13 @@ $("#ladedauer_berechnen").click(function () {
 $("#laden_zuruecksetzen").click(function () {
     $("#batteriestandPro").val("");
     $("#laden").val("");
-    $("#ladedauer").text("");
     $("#fehler-laden").slideUp(200);
+    
+    // Ladedauer ausblenden
+    $("#ladedauer").parent().slideUp(300, function() {
+        $("#ladedauer").text("");
+    });
+    
     $("#ladebalken").css("width", "0%").text("0%").attr("aria-valuenow", 0);
     $("#ladebalken").removeClass("bg-warning bg-danger").addClass("bg-success");
 });
