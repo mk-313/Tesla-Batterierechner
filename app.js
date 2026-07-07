@@ -82,9 +82,10 @@ $("#ladedauer_berechnen").click(function () {
             let dezimaleMinuten = (dezimalzahl - stunden) * 60;
             let minuten = Math.round(dezimaleMinuten);
 
-            // Text setzen und mit Slide-Down Effekt präsentieren
+            // NEU:
             $("#ladedauer").text(`Ladedauer: ${stunden} Stunden und ${minuten} Minuten`);
-            $("#ladedauer").parent().stop(true, true).hide().slideDown(500);
+            // Wir holen das <p>-Tag direkt über den Selektor und faden oder sliden es sauber ein
+            $("#ladedauer").closest("p").stop(true, true).hide().slideDown(500);
         }
     }
 });
@@ -95,9 +96,9 @@ $("#laden_zuruecksetzen").click(function () {
     $("#fehler-laden").slideUp(200);
     
     // Ladedauer ausblenden
-    $("#ladedauer").parent().slideUp(300, function() {
-        $("#ladedauer").text("");
-    });
+    $("#ladedauer").closest("p").slideUp(300, function() {
+    $("#ladedauer").text("");
+});
     
     $("#ladebalken").css("width", "0%").text("0%").attr("aria-valuenow", 0);
     $("#ladebalken").removeClass("bg-warning bg-danger").addClass("bg-success");

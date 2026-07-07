@@ -34,21 +34,28 @@ body {
     transition: 0.4s; /* 1s war etwas träge beim Hovern */
 }
 
-.badge-output p, #ladedauer {
-    display: none; /* Standardmäßig verstecken, damit jQuery es einblenden kann */
+.badge-output p {
+    display: none; /* Standardmäßig verstecken für den jQuery-Effekt */
+    margin-bottom: 15px; /* Etwas mehr Abstand zwischen den Zeilen */
 }
 
 .badge {
     white-space: normal !important;
     display: inline-block;
-    /* Macht die Größenänderung beim Einblenden geschmeidig */
+    
+    /* HIER WIRD ES GRÖSSER */
+    font-size: 1.8rem !important; /* Deutlich größere Schrift (ca. 28px) */
+    padding: 12px 24px !important; /* Mehr Platz im Inneren des Badges */
+    border-radius: 8px; /* Leicht abgerundetere Ecken bei der Größe */
+    
+    /* Animationen & Design */
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Schicker, dezenter Schatten */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Kräftigerer Schatten für mehr Tiefe */
 }
 
 .badge:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: scale(1.04);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 hr {
@@ -81,7 +88,6 @@ form {
    MEDIA QUERIES FÜR MOBILGERÄTE (Smartphones)
    ========================================================================== */
 @media (max-width: 576px) {
-    /* Macht die Input-Gruppen untereinander statt nebeneinander */
     .responsive-input-group {
         flex-direction: column;
     }
@@ -96,16 +102,17 @@ form {
     }
     
     .responsive-input-group .input-group-prepend {
-        margin-bottom: 5px; /* Kleiner Abstand zwischen Label und Eingabefeld */
+        margin-bottom: 5px;
     }
 
-    /* Kleinere Überschriften auf Smartphones */
     h1.h3 {
         font-size: 1.5rem;
     }
     
-    /* Text in den Badges auf Handys verkleinern */
-    .badge-output p {
-        font-size: 1.1rem;
+    /* WICHTIG: Auf dem Handy regeln wir die Größe etwas herunter, 
+       damit der Text nicht links und rechts übersteht */
+    .badge {
+        font-size: 1.25rem !important;
+        padding: 8px 16px !important;
     }
 }
